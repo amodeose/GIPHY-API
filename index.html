@@ -28,22 +28,32 @@
         .gifs {
             width: 75%;
         }
+
+        img {
+            margin: 5px;
+        }
+        
+        .clear {
+            background-color: red;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
-    <div class='buttons'></div>
+    <div class='buttons'>
+        <button class="clear">CLEAR</button>
+    </div>
     <div class='gifs'></div>
     <script>
 
         var topics = ['cat', 'dog', 'cow', 'turtle', 'chicken', 'bird', 'lizard'];
 
         for (let i = 0; i < topics.length; i++) {
-            $('.buttons').append($('<button>').text(topics[i]));
+            $('.buttons').append($('<button>').addClass('gif-button').text(topics[i]));
         }
         
-        $("button").on("click", function() {
+        $(".gif-button").on("click", function() {
 
             var animal = $(this).text();
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
@@ -59,7 +69,7 @@
                 for (i = 0; i < response.data.length; i++) {
 
                     var gifURL = response.data[i].images;
-                    var newGIF = $('<img>').attr('src', gifURL.fixed_height.url).attr('data-still', gifURL.fixed_height_still.url).attr('data-animate', gifURL.fixed_height.url).attr('data-state', 'animate');
+                    var newGIF = $('<img>').attr('src', gifURL.fixed_height_still.url).attr('data-still', gifURL.fixed_height_still.url).attr('data-animate', gifURL.fixed_height.url).attr('data-state', 'still');
                     $('.gifs').append(newGIF);
                     
                     newGIF.click(function(){
@@ -75,6 +85,11 @@
                 }
             });
         });
+
+        $('.clear').click(function(){
+            $('img').remove();
+        })
+
     </script>
 </body>
 </html>
