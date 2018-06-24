@@ -23,7 +23,7 @@
             font-size: 2em;
             opacity: 0.8;
         }
-        
+
         .clear {
             color: white;
             padding: 10px;
@@ -32,7 +32,7 @@
             opacity: 0.8;
             background-color: red;
         }
-        
+
         input {
             font-size: 2em;
             margin-left: 10px;
@@ -57,17 +57,18 @@
     <div class='buttons'>
         <button class="clear">clear</button>
     </div>
+    <h1>hello</h1>
     <div class='gifs'></div>
     <script>
 
         var topics = ['cat', 'dog', 'cow', 'turtle', 'chicken', 'bird', 'lizard'];
-        
+
         function createButtons() {
 
             for (let i = 0; i < topics.length; i++) {
                 $('.buttons').append($('<button>').addClass('gif-button').text(topics[i]));
             }
-            
+
             $(".gif-button").on("click", function() {
 
                 var animal = $(this).text();
@@ -86,9 +87,9 @@
                         var gifURL = response.data[i].images;
                         var newGIF = $('<img>').attr('src', gifURL.fixed_height_still.url).attr('data-still', gifURL.fixed_height_still.url).attr('data-animate', gifURL.fixed_height.url).attr('data-state', 'still');
                         $('.gifs').append(newGIF);
-                        
+
                         newGIF.click(function(){
-                
+
                             if ($(this).attr('data-state') === 'animate') {
                                 $(this).attr('src', $(this).attr('data-still'));
                                 $(this).attr('data-state', 'still');
