@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        button {
+            background-color: blue;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5%;
+            font-size: 2em;
+            margin: 5px;
+            opacity: 0.8;
+        }
+
+        button:hover {
+            opacity: 1;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div></div>
+
+    <script>
+
+        var topics = ['cat', 'dog', 'cow', 'turtle', 'chicken', 'bird', 'lizard'];
+
+        for (let i = 0; i < topics.length; i++) {
+            $('div').append($('<button>').text(topics[i]));
+        }
+        
+        $("button").on("click", function() {
+            var animal = $(this).text();
+            var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
+            animal + "&api_key=ErmCBDJeH1Y9gC5ABMtCzMz9DTxnEWHn&limit=10";
+
+            $.ajax({
+                url: queryURL,
+                method: "GET"
+            })
+            .then(function(response) {
+                
+                console.log(response);
+                
+            });
+        });
+    </script>
+</body>
+</html>
