@@ -20,22 +20,31 @@
         button:hover {
             opacity: 1;
         }
+        
+        .buttons {
+            width: 75%;
+        }
+
+        .gifs {
+            width: 75%;
+        }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 
-    <div></div>
-
+    <div class='buttons'></div>
+    <div class='gifs'></div>
     <script>
 
         var topics = ['cat', 'dog', 'cow', 'turtle', 'chicken', 'bird', 'lizard'];
 
         for (let i = 0; i < topics.length; i++) {
-            $('div').append($('<button>').text(topics[i]));
+            $('.buttons').append($('<button>').text(topics[i]));
         }
         
         $("button").on("click", function() {
+
             var animal = $(this).text();
             var queryURL = "https://api.giphy.com/v1/gifs/search?q=" +
             animal + "&api_key=ErmCBDJeH1Y9gC5ABMtCzMz9DTxnEWHn&limit=10";
@@ -44,10 +53,26 @@
                 url: queryURL,
                 method: "GET"
             })
+
             .then(function(response) {
-                
-                console.log(response);
-                
+
+                for (i = 0; i < response.data.length; i++) {
+
+                    var gifURL = response.data[i].images;
+                    var newGIF = $('<img>').attr('src', gifURL.fixed_height.url).attr('data-still', gifURL.fixed_height_still.url).attr('data-animate', gifURL.fixed_height.url).attr('data-state', 'animate');
+                    $('.gifs').append(newGIF);
+                    
+                    newGIF.click(function(){
+            
+                        if ($(this).attr('data-state') === 'animate') {
+                            $(this).attr('src', $(this).attr('data-still'));
+                            $(this).attr('data-state', 'still');
+                        } else {
+                            $(this).attr('src', $(this).attr('data-animate'));
+                            $(this).attr('data-state', 'animate');
+                        }
+                    });
+                }
             });
         });
     </script>
