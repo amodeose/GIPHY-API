@@ -48,6 +48,15 @@
             padding: 8px;
         }
 
+        .gif-container {
+
+          display: inline-block;
+        }
+
+        h3 {
+          text-align: center;
+        }
+
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
@@ -80,13 +89,12 @@
                 })
 
                 .then(function(response) {
-
                     for (i = 0; i < response.data.length; i++) {
-
+                        var gifContainer = $('<div>').addClass('gif-container');
                         var gifURL = response.data[i].images;
                         var newGIF = $('<img>').attr('src', gifURL.fixed_height_still.url).attr('data-still', gifURL.fixed_height_still.url).attr('data-animate', gifURL.fixed_height.url).attr('data-state', 'still');
-                        $('.gifs').append(newGIF);
-
+                        gifContainer.append(newGIF).append($('<br>')).append($('<h3>').text('Rating: ' + response.data[i].rating).addClass('rating'));
+                        $('.gifs').append(gifContainer);
                         newGIF.click(function(){
 
                             if ($(this).attr('data-state') === 'animate') {
@@ -105,8 +113,8 @@
 
         createButtons();
 
-        $('.clear').click(function(){
-            $('img').remove();
+        $('.clear').click(function() {
+            $('.gif-container').remove();
         })
 
         $('.submit').click(function(){
